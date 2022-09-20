@@ -1,6 +1,6 @@
 {
   "name": "@oceanicjs/builders",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helpful builders for various Discord related things.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

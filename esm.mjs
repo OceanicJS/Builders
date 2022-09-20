@@ -1,6 +1,6 @@
 const ActionRow = (await import("./dist/Structures/ActionRow.js")).default.default;
 const Button = (await import("./dist/Structures/Button.js")).default.default;
-const Component = (await import("./dist/Structures/Componen.jst")).default.default;
+const Component = (await import("./dist/Structures/Component.js")).default.default;
 const Constants = (await import("./dist/dist/Constants.js")).default;
 const SelectMenu = (await import("./dist/Structures/SelectMenu.js")).default.default;
 const TextInput = (await import("./dist/Structures/TextInput.js")).default.default;
