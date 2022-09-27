@@ -91,14 +91,10 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
 
     /**
      * Add an interaction button to the current row.
-     * @param style The [style](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles) of the button.
-     * @param customID A developer-defined identifier for the button, max 100 characters.
-     * @param label Text that appears on the button, max 80 characters.
-     * @param emoji An emoji that appears on the button.
-     * @param disabled If the button is disabled.
+     * @param options The options for adding the interaction button.
      */
-    addInteractionButton(style: ButtonStyles | ButtonColors, customID: string, label?: string, emoji?: PartialEmoji, disabled?: boolean): this {
-        this.addComponent(new Button(style, customID)["load"](style, customID, label, emoji, disabled));
+    addInteractionButton(options: AddInteractionButtonOptions): this {
+        this.addComponent(new Button(options.style, options.customID)["load"](options.style, options.customID, options.label, options.emoji, options.disabled));
         return this;
     }
 
@@ -114,44 +110,29 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
 
     /**
      * Add a select menu (to the current row, if empty - else as a new row).
-     * @param customID A developer-defined identifier for the button, max 100 characters.
-     * @param options The choices in the select, max 25.
-     * @param placeholder Custom placeholder text if nothing is selected, max 100 characters.
-     * @param minValues The minimum number of items that must be chosen; default 1, min 0, max 25.
-     * @param maxValues The maximum number of items that can be chosen; default 1, max 25.
-     * @param disabled Disable the select, default false.
+     * @param options The options for adding the select menu.
      */
-    addSelectMenu(customID: string, options: Array<SelectOption>, placeholder?: string, minValues?: number, maxValues?: number, disabled?: boolean): this {
-        this.addComponent(new SelectMenu(customID)["load"](customID, options, placeholder, minValues, maxValues, disabled));
+    addSelectMenu(options: AddSelectMenuOptions): this {
+        this.addComponent(new SelectMenu(options.customID)["load"](options.customID, options.options, options.placeholder, options.minValues, options.maxValues, options.disabled));
         return this;
     }
 
     /**
      * Add a text input to the current row.
-     * @param style The [style](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles) of the text input.
-     * @param label The label for this text input.
-     * @param customID A developer-defined identifier for the input, max 100 characters.
-     * @param placeholder Custom placeholder text if the input is empty, max 100 characters.
-     * @param value A pre-filled value for this component, max 4000 characters.
-     * @param minLength The minimum input length for a text input, min 0, max 4000.
-     * @param maxLength The maximum input length for a text input, min 1, max 4000.
-     * @param required If this component is required to be filled, default true.
+     * @param options The options for adding the text input.
      * @returns
      */
-    addTextInput(style: TextInputStyles, label: string, customID: string, placeholder?: string, value?: string, minLength?: number, maxLength?: number, required?: boolean): this {
-        this.addComponent(new TextInput(style, label, customID)["load"](style, label, customID, placeholder, value, minLength, maxLength, required));
+    addTextInput(options: AddTextMenuOptions): this {
+        this.addComponent(new TextInput(options.style, options.label, options.customID)["load"](options.style, options.label, options.customID, options.placeholder, options.value, options.minLength, options.maxLength, options.required));
         return this;
     }
 
     /**
      * Add a url button to the current row
-     * @param url The url to open when clicked.
-     * @param label Text that appears on the button, max 80 characters.
-     * @param emoji An emoji that appears on the button.
-     * @param disabled If the button is disabled.
+     * @param options The options for adding the url button.
      */
-    addURLButton(url: string, label?: string, emoji?: PartialEmoji, disabled?: boolean): this {
-        this.addComponent(new Button(ButtonStyles.LINK, url)["load"](ButtonStyles.LINK, url, label, emoji, disabled));
+    addURLButton(options: AddURLButtonOptions): this {
+        this.addComponent(new Button(ButtonStyles.LINK, options.url)["load"](ButtonStyles.LINK, options.url, options.label, options.emoji, options.disabled));
         return this;
     }
 
@@ -178,4 +159,62 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
     toJSON(): Array<T> {
         return this.removeEmptyRows().rows.map(row => row.toJSON()) as Array<T>;
     }
+}
+
+export interface AddInteractionButtonOptions {
+/** A developer-defined identifier for the button, max 100 characters. */
+    customID: string;
+    /** If the button is disabled. */
+    disabled?: boolean;
+    /** An emoji that appears on the button. */
+    emoji?: PartialEmoji;
+    /** Text that appears on the button, max 80 characters. */
+    label?: string;
+    /** The [style](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles) of the button. */
+    style: ButtonStyles | ButtonColors;
+}
+
+export interface AddSelectMenuOptions {
+/** A developer-defined identifier for the button, max 100 characters. */
+    customID: string;
+    /** Disable the select, default false. */
+    disabled?: boolean;
+    /** The maximum number of items that can be chosen; default 1, max 25. */
+    maxValues?: number;
+    /** The minimum number of items that must be chosen; default 1, min 0, max 25. */
+    minValues?: number;
+    /** The choices in the select, max 25. */
+    options: Array<SelectOption>;
+    /** Custom placeholder text if nothing is selected, max 100 characters. */
+    placeholder?: string;
+}
+
+export interface AddTextMenuOptions {
+/** A developer-defined identifier for the input, max 100 characters. */
+    customID: string;
+    /** The label for this text input. */
+    label: string;
+    /** The maximum input length for a text input, min 1, max 4000. */
+    maxLength?: number;
+    /** The minimum input length for a text input, min 0, max 4000. */
+    minLength?: number;
+    /** Custom placeholder text if the input is empty, max 100 characters. */
+    placeholder?: string;
+    /** If this component is required to be filled, default true. */
+    required?: boolean;
+    /** The [style](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles) of the text input. */
+    style: TextInputStyles;
+    /** A pre-filled value for this component, max 4000 characters. */
+    value?: string;
+}
+
+export interface AddURLButtonOptions {
+/** If the button is disabled. */
+    disabled?: boolean;
+    /** An emoji that appears on the button. */
+    emoji?: PartialEmoji;
+    /** Text that appears on the button, max 80 characters. */
+    label?: string;
+    /** The url to open when clicked. */
+    url: string;
 }

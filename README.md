@@ -38,8 +38,12 @@ LINK      = URL
 */
 
 // add a url button (style 5)
-// url, label, emoji, disabled
-builder.addURLButton("https://google.com", "Click Here", { id: "681748079778463796", name: "paws8", animated: false }, false);
+builder.addURLButton({
+	disabled: false,
+	emoji: { id: "681748079778463796", name: "paws8", animated: false },
+	label: "Click Here",
+	url: "https://google.com"
+});
 
 // for emojis, we have a helper to convert full emoji strings, or code points into a partial emoji (this method is static)
 // emoji, type (default/custom)
@@ -49,13 +53,27 @@ ComponentBuilder.emojiToPartial("<a:owoanim:768551122066472990>", "custom") // {
 
 // if the current row has a component in it already, this method will automatically create a new row and add the select menu in that row, the create another row for you to continue using in other methods
 // add a select menu
-// customID, options, placeholder, minValues, maxValues, disabled
-builder.addSelectMenu("some-custom-id", [], "Some Placeholder Here", 1, 3, false);
+builder.addSelectMenu({
+	customID: "some-custom-id",
+	disabled: false,
+	maxValues: 3,
+	minValues: 1,
+	options: [],
+	placeholder: "Some Placeholder Here"
+});
 // see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure for options structure
 
 // add a text input
-// style, label, customID, placeholder, value, minLength, maxLength, required
-builder.addTextInput(TextInputStyles.SHORT, "Some Label Here", "some-custom-id", "Some Placeholder Here", "Initial Value", 20, 100, true);
+builder.addTextInput({
+	customID: "some-custom-id",
+	label: "Some Label Here",
+	maxLength: 100,
+	minValue: 20,
+	placeholder: "Some Placeholder Here",
+	required: true,
+	style: TextInputStyles.SHORT,
+	value: "Initial Value"
+});
 // currently SHORT & PARAGRAPH exist
 
 // remove all currently present empty rows (this is already done while converting to JSON)
