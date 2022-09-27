@@ -62,7 +62,7 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
      */
     addComponent(component: ValidComponents): this {
         const cur = this.getCurrentRow();
-        if (component.type === ComponentTypes.SELECT_MENU) {
+        if (component.type === ComponentTypes.SELECT_MENU || component.type === ComponentTypes.TEXT_INPUT) {
             if (cur.isEmpty()) {
                 cur.addComponent(component);
                 this.addRow();
