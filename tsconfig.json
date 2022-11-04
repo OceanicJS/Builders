@@ -3,7 +3,7 @@
     "outDir": "dist",
     "baseUrl": "lib",
     "strictPropertyInitialization": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "inlineSourceMap": true,
     "target": "ES2022",
     "resolveJsonModule": true,

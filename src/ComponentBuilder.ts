@@ -9,12 +9,15 @@ import {
     MessageActionRow,
     ModalActionRow,
     PartialEmoji,
+    SelectMenuTypes,
     SelectOption,
     TextInputStyles
 } from "oceanic.js";
 
 type RowMax = 1 | 2 | 3 | 4 | 5;
 type ValidComponents = Button | SelectMenu | TextInput;
+
+const SelectMenuTypeValues = ComponentTypes.STRING_SELECT | ComponentTypes.USER_SELECT | ComponentTypes.ROLE_SELECT | ComponentTypes.MENTIONABLE_SELECT | ComponentTypes.CHANNEL_SELECT;
 export default class ComponentBuilder<T extends MessageActionRow | ModalActionRow = MessageActionRow | ModalActionRow> {
     private currentIndex = 0;
     private rows: Array<ActionRow> = [];
@@ -62,7 +65,7 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
      */
     addComponent(component: ValidComponents): this {
         const cur = this.getCurrentRow();
-        if (component.type === ComponentTypes.SELECT_MENU || component.type === ComponentTypes.TEXT_INPUT) {
+        if (component.type === SelectMenuTypeValues || component.type === ComponentTypes.TEXT_INPUT) {
             if (cur.isEmpty()) {
                 cur.addComponent(component);
                 this.addRow();
@@ -113,7 +116,7 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
      * @param options The options for adding the select menu.
      */
     addSelectMenu(options: AddSelectMenuOptions): this {
-        this.addComponent(new SelectMenu(options.customID)["load"](options.customID, options.options, options.placeholder, options.minValues, options.maxValues, options.disabled));
+        this.addComponent(new SelectMenu(options.type, options.customID)["load"](options.customID, options.options, options.placeholder, options.minValues, options.maxValues, options.disabled));
         return this;
     }
 
@@ -187,6 +190,8 @@ export interface AddSelectMenuOptions {
     options: Array<SelectOption>;
     /** Custom placeholder text if nothing is selected, max 100 characters. */
     placeholder?: string;
+    /** The type of select menu to add. */
+    type: SelectMenuTypes;
 }
 
 export interface AddTextMenuOptions {

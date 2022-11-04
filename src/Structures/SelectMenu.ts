@@ -1,7 +1,14 @@
 import Component from "./Component";
-import { ComponentTypes, PartialEmoji, SelectOption, SelectMenu as ISelectMenu } from "oceanic.js";
+import {
+    PartialEmoji,
+    SelectOption,
+    SelectMenuTypes,
+    SelectMenuComponent,
+    ChannelTypes
+} from "oceanic.js";
 
-export default class SelectMenu extends Component<ComponentTypes.SELECT_MENU> {
+export default class SelectMenu extends Component<SelectMenuTypes> {
+    channelTypes?: Array<ChannelTypes>;
     customID: string;
     disabled = false;
     maxValues?: number;
@@ -12,8 +19,8 @@ export default class SelectMenu extends Component<ComponentTypes.SELECT_MENU> {
      * Create a new SelectMenu.
      * @param customID The custom ID of this select menu.
      */
-    constructor(customID: string) {
-        super(ComponentTypes.SELECT_MENU);
+    constructor(type: SelectMenuTypes, customID: string) {
+        super(type);
         this.customID = customID;
     }
 
@@ -72,11 +79,18 @@ export default class SelectMenu extends Component<ComponentTypes.SELECT_MENU> {
         return this;
     }
 
-    /**
-     * Clear all currently present options on this select menu.
-     */
+    /** Clear all currently present options on this select menu. */
     clearOptions(): this {
         this.options = [];
+        return this;
+    }
+
+    /** Set the valid channel types for a channel select menu. */
+    setChannelTypes(...types: [types: Array<ChannelTypes>] | Array<ChannelTypes>): this {
+        if (types.length === 1 && Array.isArray(types[0])) {
+            types = types[0];
+        }
+        this.channelTypes = types as Array<ChannelTypes>;
         return this;
     }
 
@@ -114,15 +128,16 @@ export default class SelectMenu extends Component<ComponentTypes.SELECT_MENU> {
     }
 
     /** converts this SelectMenu instance to json. */
-    override toJSON(): ISelectMenu {
+    override toJSON(): SelectMenuComponent {
         return {
-            type:        this.type,
-            customID:    this.customID,
-            options:     this.options,
-            placeholder: this.placeholder,
-            minValues:   this.minValues,
-            maxValues:   this.maxValues,
-            disabled:    this.disabled
-        };
+            type:         this.type,
+            customID:     this.customID,
+            options:      this.options,
+            placeholder:  this.placeholder,
+            minValues:    this.minValues,
+            maxValues:    this.maxValues,
+            disabled:     this.disabled,
+            channelTypes: this.channelTypes
+        } as SelectMenuComponent;
     }
 }

@@ -7,3 +7,5 @@ export { default as SelectMenu } from "./Structures/SelectMenu";
 export { default as TextInput } from "./Structures/TextInput";
 export { default as ComponentBuilder } from "./ComponentBuilder";
 export { default as EmbedBuilder } from "./EmbedBuilder";
+export { default as ApplicationCommandBuilder } from "./ApplicationCommandBuilder";
+export { default as ApplicationCommandOptionBuilder } from "./ApplicationCommandOptionBuilder";
