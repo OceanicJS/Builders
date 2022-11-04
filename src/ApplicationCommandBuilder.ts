@@ -92,10 +92,10 @@ export default class ApplicationCommandBuilder<T extends ApplicationCommandTypes
     /** Set the default permissions required to use this command. */
     setDefaultMemberPermissions(...permissions: [bigint | string | Permission | Array<PermissionName>] | Array<PermissionName>): this {
         let data: bigint | string | Permission | Array<PermissionName>;
-        if (permissions.length > 1 || typeof permissions[0] === "string" && permissionNames.includes(permissions[0])) {
-            data = permissions[0];
+        if (permissions.length > 1 || (typeof permissions[0] === "string" && permissionNames.includes(permissions[0]))) {
+            data = permissions as Array<PermissionName>;
         } else {
-            data = permissions as typeof data;
+            data = permissions[0];
         }
         if (data instanceof Permission) {
             data = data.allow.toString();
