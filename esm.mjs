@@ -6,6 +6,8 @@ const SelectMenu = (await import("./dist/Structures/SelectMenu.js")).default.def
 const TextInput = (await import("./dist/Structures/TextInput.js")).default.default;
 const ComponentBuilder = (await import("./dist/ComponentBuilder.js")).default.default;
 const EmbedBuilder = (await import("./dist/EmbedBuilder.js")).default.default;
+const ApplicationCommandBuilder = (await import("./dist/ApplicationCommandBuilder.js")).default.default;
+const ApplicationCommandOptionBuilder = (await import("./dist/ApplicationCommandOptionBuilder.js")).default.default;
 export * from "./dist/Constants.js";
 
 export {
@@ -16,5 +18,7 @@ export {
 	SelectMenu,
 	TextInput,
 	ComponentBuilder,
-	EmbedBuilder
+	EmbedBuilder,
+    ApplicationCommandBuilder,
+    ApplicationCommandOptionBuilder
 }
