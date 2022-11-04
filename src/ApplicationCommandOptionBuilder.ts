@@ -60,11 +60,38 @@ export default class ApplicationCommandOptionBuilder<T extends ApplicationComman
         this.name = name;
     }
 
+    /**
+     * Add a choice.
+     * @param name The name of the choice.
+     * @param value The value of the choice.
+     * @param nameLocalizations A map of [locales](https://discord.com/developers/docs/reference#locales) to name localizations.
+     */
     addChoice(name: string, value: string | number, nameLocalizations?: Record<string, string>): this {
         this.choices.push({ name, value, nameLocalizations });
         return this;
     }
 
+    /**
+     * Add a description localization.
+     * @param locale The [locale](https://discord.com/developers/docs/reference#locales) of the localization.
+     * @param description The localized description.
+     */
+    addDescriptionLocalization(locale: string, description: string): this {
+        (this.descriptionLocalizations ??= {})[locale] = description;
+        return this;
+    }
+
+    /**
+     * Add a name localization.
+     * @param locale The [locale](https://discord.com/developers/docs/reference#locales) of the localization.
+     * @param name The localized name.
+     */
+    addNameLocalization(locale: string, name: string): this {
+        (this.nameLocalizations ??= {})[locale] = name;
+        return this;
+    }
+
+    /** Add an option. */
     addOption<O extends ApplicationCommandOptionTypes = ApplicationCommandOptionTypes>(option: ApplicationCommandOptionBuilder<O> | ApplicationCommandOptions): this;
     addOption<O extends ApplicationCommandOptionTypes = ApplicationCommandOptionTypes>(name: string, type: O, extra?: ((this: ApplicationCommandOptionBuilder<T>, option: ApplicationCommandOptionBuilder<O>) => void) | ApplicationCommandOptions): this;
     addOption<O extends ApplicationCommandOptionTypes = ApplicationCommandOptionTypes>(...args: [name: string, type: O, extra?: ((this: ApplicationCommandOptionBuilder<T>, option: ApplicationCommandOptionBuilder<O>) => void) | Omit<ApplicationCommandOptions, "name" | "type">] | [option: ApplicationCommandOptionBuilder<O> | ApplicationCommandOptions]): this {
@@ -91,52 +118,68 @@ export default class ApplicationCommandOptionBuilder<T extends ApplicationComman
         }
     }
 
-    setAutocomplete(value = true): this {
+    /** Toggle autocomplete for this option. */
+    setAutocomplete(value = !this.autocomplete): this {
         this.autocomplete = value;
         return this;
     }
 
+    /** Set the allowed channel types for this option. */
     setChannelTypes(types: Array<ChannelTypes>): this {
         this.channelTypes = types;
         return this;
     }
 
+    /** Set the choices for this option. */
     setChoices(choices: Array<ApplicationCommandOptionsChoice>): this {
         this.choices = choices;
         return this;
     }
 
+    /** Set the description of this option. */
     setDescription(description: string): this {
         this.description = description;
         return this;
     }
 
+    /**
+     * Set the description localizations of this option.
+     * @param localizations A map of [locales](https://discord.com/developers/docs/reference#locales) to localized description strings.
+     */
     setDescriptionLocalizations(localizations: Record<string, string>): this {
         this.descriptionLocalizations = localizations;
         return this;
     }
 
+    /** Set the min/max for this option. This applied to both `minValue`/`maxValue` and `minLength`/`maxLength`. */
     setMinMax(min?: number, max?: number): this {
         this.max = max;
         this.min = min;
         return this;
     }
 
+    /** Set the name of this option. */
     setName(name: string): this {
         this.name = name;
         return this;
     }
 
+    /**
+     * Set the name localizations of this option.
+     * @param localizations A map of [locales](https://discord.com/developers/docs/reference#locales) to localized name strings.
+     */
     setNameLocalizations(localizations: Record<string, string>): this {
         this.nameLocalizations = localizations;
         return this;
     }
 
-    setRequired(value = true): this {
+    /** Toggle this option being required. */
+    setRequired(value = !this.required): this {
         this.required = value;
         return this;
     }
 
+    /** Convert this command to JSON. */
     toJSON(): TypeToOption<T> {
         let res: ApplicationCommandOptions;
         switch (this.type) {
