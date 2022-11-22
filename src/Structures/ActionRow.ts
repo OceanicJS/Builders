@@ -7,7 +7,10 @@ import {
     MessageActionRow,
     ModalActionRow,
     TextButton,
-    URLButton
+    URLButton,
+    RawMessageActionRow,
+    RawModalActionRow,
+    RawTextButton
 } from "oceanic.js";
 
 export default class ActionRow {
@@ -41,5 +44,12 @@ export default class ActionRow {
             type:       this.type,
             components: this.components.map(c => c.toJSON() as TextButton | URLButton) as Array<Component>
         } as MessageActionRow | ModalActionRow;
+    }
+
+    toJSONRaw(): RawMessageActionRow | RawModalActionRow {
+        return {
+            type:       this.type,
+            components: this.components.map(c => c.toJSONRaw() as RawTextButton | URLButton) as Array<Component>
+        } as RawMessageActionRow | RawModalActionRow;
     }
 }

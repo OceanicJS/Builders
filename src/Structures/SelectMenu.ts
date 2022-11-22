@@ -4,7 +4,8 @@ import {
     SelectOption,
     SelectMenuTypes,
     SelectMenuComponent,
-    ChannelTypes
+    ChannelTypes,
+    RawSelectMenuComponent
 } from "oceanic.js";
 
 export default class SelectMenu extends Component<SelectMenuTypes> {
@@ -139,5 +140,19 @@ export default class SelectMenu extends Component<SelectMenuTypes> {
             disabled:     this.disabled,
             channelTypes: this.channelTypes
         } as SelectMenuComponent;
+    }
+
+    /** converts this SelectMenu instance to json. */
+    override toJSONRaw(): RawSelectMenuComponent {
+        return {
+            type:          this.type,
+            custom_id:     this.customID,
+            options:       this.options,
+            placeholder:   this.placeholder,
+            min_values:    this.minValues,
+            max_values:    this.maxValues,
+            disabled:      this.disabled,
+            channel_types: this.channelTypes
+        } as RawSelectMenuComponent;
     }
 }

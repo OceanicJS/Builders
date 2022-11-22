@@ -86,6 +86,9 @@ builder.removeEmptyRows();
 // convert all of the added content into JSON, ready to be used as a components property in a message/modal
 builder.toJSON();
 
+// most things have a Raw variant, which returns json that can be sent directly to Discord
+builder.toJSONRaw();
+
 
 // a few other things, if you want to add a new row at any time, just call..
 builder.addRow();

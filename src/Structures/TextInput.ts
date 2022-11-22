@@ -1,5 +1,5 @@
 import Component from "./Component";
-import { ComponentTypes, TextInput as ITextInput, TextInputStyles } from "oceanic.js";
+import { ComponentTypes, RawTextInput, TextInput as ITextInput, TextInputStyles } from "oceanic.js";
 
 export default class TextInput extends Component<ComponentTypes.TEXT_INPUT> {
     customID: string;
@@ -131,6 +131,20 @@ export default class TextInput extends Component<ComponentTypes.TEXT_INPUT> {
             label:       this.label,
             minLength:   this.minLength,
             maxLength:   this.maxLength,
+            required:    this.required,
+            value:       this.value,
+            placeholder: this.placeholder
+        };
+    }
+
+    override toJSONRaw(): RawTextInput {
+        return {
+            type:        this.type,
+            custom_id:   this.customID,
+            style:       this.style,
+            label:       this.label,
+            min_length:  this.minLength,
+            max_length:  this.maxLength,
             required:    this.required,
             value:       this.value,
             placeholder: this.placeholder

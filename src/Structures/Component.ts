@@ -26,4 +26,8 @@ export default class Component<T extends ComponentTypes = ComponentTypes> {
     toJSON(): unknown {
         return {};
     }
+
+    toJSONRaw(): unknown {
+        return this.toJSON();
+    }
 }

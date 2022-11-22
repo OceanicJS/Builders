@@ -9,6 +9,8 @@ import {
     MessageActionRow,
     ModalActionRow,
     PartialEmoji,
+    RawMessageActionRow,
+    RawModalActionRow,
     SelectMenuTypes,
     SelectOption,
     TextInputStyles
@@ -18,6 +20,7 @@ type RowMax = 1 | 2 | 3 | 4 | 5;
 type ValidComponents = Button | SelectMenu | TextInput;
 
 const SelectMenuTypeValues = ComponentTypes.STRING_SELECT | ComponentTypes.USER_SELECT | ComponentTypes.ROLE_SELECT | ComponentTypes.MENTIONABLE_SELECT | ComponentTypes.CHANNEL_SELECT;
+type ToRaw<T extends MessageActionRow | ModalActionRow> = T extends MessageActionRow ? RawMessageActionRow : RawModalActionRow;
 export default class ComponentBuilder<T extends MessageActionRow | ModalActionRow = MessageActionRow | ModalActionRow> {
     private currentIndex = 0;
     private rows: Array<ActionRow> = [];
@@ -161,6 +164,11 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
     /** convert the current contents to JSON */
     toJSON(): Array<T> {
         return this.removeEmptyRows().rows.map(row => row.toJSON()) as Array<T>;
+    }
+
+    /** convert the current contents to JSON */
+    toJSONRaw(): Array<ToRaw<T>> {
+        return this.removeEmptyRows().rows.map(row => row.toJSONRaw()) as Array<ToRaw<T>>;
     }
 }
 

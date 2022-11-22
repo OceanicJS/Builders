@@ -1,9 +1,11 @@
-import type {
+import {
     EmbedAuthorOptions,
     EmbedField,
     EmbedFooterOptions,
     EmbedImageOptions,
-    EmbedOptions
+    EmbedOptions,
+    RawEmbedOptions,
+    Util
 } from "oceanic.js";
 export default class EmbedBuilder {
     private json: EmbedOptions = {};
@@ -319,5 +321,16 @@ export default class EmbedBuilder {
     toJSON(array?: false): EmbedOptions;
     toJSON(array = false): [EmbedOptions] | EmbedOptions {
         return array ? [this.json] : this.json;
+    }
+
+    /**
+     * Convert this embed to a raw json object.
+     * @param array If the returned value should be contained in an array.
+     */
+    toJSONRaw(array: true): [RawEmbedOptions];
+    toJSONRaw(array?: false): RawEmbedOptions;
+    toJSONRaw(array = false): [RawEmbedOptions] | RawEmbedOptions {
+        const [embed] = Util.prototype.embedsToRaw([this.json]);
+        return array ? [embed] : embed;
     }
 }

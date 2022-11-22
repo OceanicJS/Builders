@@ -4,6 +4,7 @@ import {
     ButtonStyles,
     ComponentTypes,
     PartialEmoji,
+    RawTextButton,
     TextButton,
     URLButton
 } from "oceanic.js";
@@ -123,6 +124,17 @@ export default class Button extends Component<ComponentTypes.BUTTON> {
             (obj as TextButton).customID = this.customID!;
             return obj;
         }
+    }
 
+    override toJSONRaw(): RawTextButton | URLButton {
+        const json = this.toJSON();
+        if (this.style === ButtonStyles.LINK) {
+            return json as URLButton;
+        } else {
+            const raw = json as unknown as Record<string, unknown>;
+            raw.custom_id = raw.customID;
+            delete raw.customID;
+            return raw as unknown as RawTextButton;
+        }
     }
 }
