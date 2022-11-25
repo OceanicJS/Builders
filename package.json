@@ -1,6 +1,6 @@
 {
   "name": "@oceanicjs/builders",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Helpful builders for various Discord related things.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,9 @@
     }
   },
   "scripts": {
-    "prepublishOnly": "rm -rf build && tsc && echo Build Finished"
+    "prepublishOnly": "rm -rf build && tsc && echo Build Finished",
+    "lint": "eslint lib --ext .ts",
+    "lint:fix": "eslint lib --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -36,16 +38,16 @@
   "homepage": "https://github.com/OceanicJS/Builders#readme",
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.42.0",
-    "eslint": "^8.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
+    "eslint": "^8.28.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-import-newlines": "^1.2.3",
-    "eslint-plugin-jsdoc": "^39.6.2",
+    "eslint-plugin-import-newlines": "^1.3.0",
+    "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.3"
   },
   "publishConfig": {
     "access": "public"

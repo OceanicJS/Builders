@@ -19,7 +19,8 @@ import {
 type RowMax = 1 | 2 | 3 | 4 | 5;
 type ValidComponents = Button | SelectMenu | TextInput;
 
-const SelectMenuTypeValues = ComponentTypes.STRING_SELECT | ComponentTypes.USER_SELECT | ComponentTypes.ROLE_SELECT | ComponentTypes.MENTIONABLE_SELECT | ComponentTypes.CHANNEL_SELECT;
+const SelectMenuTypeValues = [ComponentTypes.STRING_SELECT, ComponentTypes.USER_SELECT, ComponentTypes.ROLE_SELECT, ComponentTypes.MENTIONABLE_SELECT, ComponentTypes.CHANNEL_SELECT];
+const UniqueRowNeeded = [...SelectMenuTypeValues, ComponentTypes.TEXT_INPUT];
 type ToRaw<T extends MessageActionRow | ModalActionRow> = T extends MessageActionRow ? RawMessageActionRow : RawModalActionRow;
 export default class ComponentBuilder<T extends MessageActionRow | ModalActionRow = MessageActionRow | ModalActionRow> {
     private currentIndex = 0;
@@ -68,22 +69,22 @@ export default class ComponentBuilder<T extends MessageActionRow | ModalActionRo
      */
     addComponent(component: ValidComponents): this {
         const cur = this.getCurrentRow();
-        if (component.type === SelectMenuTypeValues || component.type === ComponentTypes.TEXT_INPUT) {
+        if (UniqueRowNeeded.includes(component.type)) {
             if (cur.isEmpty()) {
                 cur.addComponent(component);
                 this.addRow();
-                return this;
             } else {
                 this.addRow([component]).addRow();
-                return this;
+            }
+        } else {
+            if (cur.size >= this.rowMax) {
+                this.addRow([component]);
+            } else {
+                cur.addComponent(component);
             }
         }
-        if (cur.size >= this.rowMax) {
-            return this.addRow([component]);
-        } else {
-            cur.addComponent(component);
-            return this;
-        }
+
+        return this;
     }
 
     /**
