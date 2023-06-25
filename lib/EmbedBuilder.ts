@@ -56,10 +56,16 @@ export default class EmbedBuilder {
 
     /**
      * Add multiple fields.
-     * @param fields - the fields to add
+     * @param fields The fields to add.
      */
-    addFields(...fields: Array<EmbedField>): this {
-        fields.forEach(arg => this.addField(arg.name, arg.value, arg.inline));
+    addFields(...fields: Array<EmbedField | Array<EmbedField>>): this {
+        for (const field of fields) {
+            if (Array.isArray(field)) {
+                this.addFields(...field);
+            } else {
+                this.addField(field.name, field.value, field.inline);
+            }
+        }
         return this;
     }
 

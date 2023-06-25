@@ -158,7 +158,12 @@ embed.addBlankField(true);
 embed.addBlankField(false);
 
 // add multiple fields manually
-embed.addFields([/*(...)*/]);
+// you can provide embeds as separate parameters, a single array argument, multiple arrays as separate parameters, or a mix of both
+embed.addFields({ name: "field name", value: "field value" }, { name: "field name", value: "field value" });
+embed.addFields([{ name: "field name", value: "field value" }, { name: "field name", value: "field value" }]);
+embed.addFields({ name: "field name", value: "field value" }, [{ name: "field name", value: "field value", inline: true }, { name: "field name", value: "field value", inline: false }]);
+embed.addFields([{ name: "field name", value: "field value", inline: true }, { name: "field name", value: "field value", inline: false }], { name: "field name", value: "field value" });
+embed.addFields([{ name: "field name", value: "field value", inline: false }, { name: "field name", value: "field value", inline: true }], [{ name: "field name", value: "field value", inline: true }, { name: "field name", value: "field value", inline: false }]);
 
 // set the footer - text, icon url
 embed.setFooter("hi", "https://i.furry.cool/DonPride.png");
