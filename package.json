@@ -1,6 +1,6 @@
 {
   "name": "@oceanicjs/builders",
-  "version": "1.1.7",
+  "version": "1.1.9",
   "description": "Helpful builders for various Discord related things.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -53,6 +53,6 @@
     "access": "public"
   },
   "peerDependencies": {
-    "oceanic.js": "*"
+    "oceanic.js": "^1.7.1"
   }
 }

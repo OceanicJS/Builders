@@ -1,5 +1,5 @@
 import Component from "./Component";
-import { ButtonColors } from "../Constants";
+import type { ButtonColors } from "../Constants";
 import {
     ButtonStyles,
     ComponentTypes,

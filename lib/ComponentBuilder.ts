@@ -2,7 +2,7 @@ import ActionRow from "./Structures/ActionRow";
 import Button from "./Structures/Button";
 import SelectMenu from "./Structures/SelectMenu";
 import TextInput from "./Structures/TextInput";
-import { ButtonColors } from "./Constants";
+import type { ButtonColors } from "./Constants";
 import {
     ButtonStyles,
     ComponentTypes,

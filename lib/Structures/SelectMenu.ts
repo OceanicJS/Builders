@@ -1,17 +1,18 @@
 import Component from "./Component";
-import {
+import type {
     PartialEmoji,
     SelectOption,
     SelectMenuTypes,
     SelectMenuComponent,
     ChannelTypes,
-    RawSelectMenuComponent
+    RawSelectMenuComponent,
+    NullablePartialEmoji
 } from "oceanic.js";
 
 export default class SelectMenu extends Component<SelectMenuTypes> {
     channelTypes?: Array<ChannelTypes>;
     customID: string;
-    disabled = false;
+    override disabled = false;
     maxValues?: number;
     minValues?: number;
     options: Array<SelectOption> = [];
@@ -60,7 +61,7 @@ export default class SelectMenu extends Component<SelectMenuTypes> {
      * @param description The description of this option.
      * @param emoji The emoji to displayed with this option.
      */
-    addOption(label: string, value: string, description?: string, emoji?: PartialEmoji, defaultSelection?: boolean): this {
+    addOption(label: string, value: string, description?: string, emoji?: NullablePartialEmoji, defaultSelection?: boolean): this {
         this.options.push({
             label,
             value,

@@ -1,4 +1,4 @@
-import { ComponentTypes } from "oceanic.js";
+import type { ComponentTypes } from "oceanic.js";
 
 export default class Component<T extends ComponentTypes = ComponentTypes> {
     disabled = false;
